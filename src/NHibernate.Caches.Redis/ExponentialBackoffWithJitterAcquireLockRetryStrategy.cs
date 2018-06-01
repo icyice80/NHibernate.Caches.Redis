@@ -9,7 +9,7 @@ namespace NHibernate.Caches.Redis
 {
     public class ExponentialBackoffWithJitterAcquireLockRetryStrategy : IAcquireLockRetryStrategy
     {
-        private static readonly IInternalLogger log = LoggerProvider.LoggerFor(typeof(ExponentialBackoffWithJitterAcquireLockRetryStrategy));
+        private static readonly INHibernateLogger log = NHibernateLogger.For(typeof(ExponentialBackoffWithJitterAcquireLockRetryStrategy));
 
         public delegate void BackoffEventHandler(ShouldRetryAcquireLockArgs args, int attempt, int sleep);
 
@@ -45,9 +45,9 @@ namespace NHibernate.Caches.Redis
                     var v = (int)Math.Min(sleepMax, Math.Pow(2, attempt) * sleepBase);
                     var sleep = random.Next(sleepBase, v);
 
-                    if (log.IsDebugEnabled)
+                    if (log.IsDebugEnabled())
                     {
-                        log.DebugFormat("sleep back off for {0}ms", sleep);
+                        log.Debug("sleep back off for {0}ms", sleep);
                     }
 
                     if (onBackoff != null)

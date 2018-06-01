@@ -10,7 +10,7 @@ namespace NHibernate.Caches.Redis
 {
     public class RedisCacheProvider : ICacheProvider
     {
-        private static readonly IInternalLogger log = LoggerProvider.LoggerFor(typeof(RedisCacheProvider));
+        private static readonly INHibernateLogger log = NHibernateLogger.For(typeof(RedisCacheProvider));
         private static ConnectionMultiplexer connectionMultiplexerStatic;
         private static RedisCacheProviderOptions optionsStatic;
         private static object syncRoot = new object();
@@ -83,7 +83,7 @@ namespace NHibernate.Caches.Redis
                 }
             }
 
-            if (log.IsDebugEnabled)
+            if (log.IsDebugEnabled())
             {
                 var sb = new StringBuilder();
                 foreach (var pair in properties)
@@ -94,7 +94,7 @@ namespace NHibernate.Caches.Redis
                     sb.Append(pair.Value);
                     sb.Append(";");
                 }
-                log.DebugFormat("building cache with region: {0}, properties: {1}", regionName, sb);
+                log.Debug("building cache with region: {0}, properties: {1}", regionName, sb);
             }
 
             RedisCacheConfiguration configuration = null;
@@ -106,7 +106,7 @@ namespace NHibernate.Caches.Redis
 
             if (configuration == null)
             {
-                log.DebugFormat("loading cache configuration for '{0}' from properties/defaults", regionName);
+                log.Debug("loading cache configuration for '{0}' from properties/defaults", regionName);
                 configuration = RedisCacheConfiguration.FromPropertiesOrDefaults(regionName, properties);
             }
 

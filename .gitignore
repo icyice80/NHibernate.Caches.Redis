@@ -106,3 +106,6 @@ UpgradeLog*.XML
 *.rdb
 
 App_Data # Sample database.
+
+#SqlLite
+.vs/
